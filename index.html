@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LinkedIn QR | Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- QR Code Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap');
+
+.site-header {
+  position: fixed;
+  top: 20px;
+  left: 30px;              /* LEFT SIDE */
+  font-family: 'Cinzel', serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 3px;
+  text-shadow: 0 8px 20px rgba(0,0,0,0.45);
+  z-index: 1000;
+  user-select: none;
+}
+
+.site-header span {
+  color: #0A66C2;
+  font-weight: 700;
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+.linkedin-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0A66C2, #0077b5);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.linkedin-btn:hover {
+  transform: scale(1.12);   /* ZOOM EFFECT */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2, #43cea2);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+}
+
+/* ===== BACKGROUND ANIMATION ===== */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== COMMON CARD ===== */
+.card {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(18px);
+  border-radius: 22px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* ===== SECTION 1: HERO QR ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero .card {
+  width: 340px;
+}
+
+.hero h1 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #eaeaea;
+  margin-bottom: 20px;
+}
+
+#myQR {
+  background: #fff;
+  padding: 15px;
+  border-radius: 14px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.linkedin-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 30px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0A66C2, #0077b5);
+}
+
+/* ===== SCROLL HINT ===== */
+.scroll {
+  margin-top: 15px;
+  color: #fff;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* ===== SECTION 2: GENERATOR ===== */
+.generator {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generator .card {
+  width: 360px;
+}
+
+.generator h2 {
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.generator p {
+  color: #eaeaea;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.color-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.color-box input {
+  height: 40px;
+  padding: 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, #0A66C2, #0077b5);
+  margin-bottom: 12px;
+}
+
+#genQR {
+  background: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  display: inline-block;
+  margin: 12px 0;
+}
+
+.download {
+  display: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HERO SECTION ================= -->
+
+<div class="site-header">QR<span>-</span>Gen</div>
+
+<section class="hero">
+  <div class="card">
+    <h2>Connect on LinkedIn</h2>
+    <p>Scan my QR code</p>
+
+    <div id="myQR"></div>
+
+    <a class="linkedin-btn" href="https://www.linkedin.com/in/hetvi-root/" target="_blank">
+      Visit My LinkedIn
+    </a>
+
+    <div class="scroll">⬇ Scroll to generate your own QR</div>
+  </div>
+</section>
+
+<!-- ================= GENERATOR SECTION ================= -->
+<section class="generator" id="generator">
+  <div class="card">
+    <h2>QR Code Generator</h2>
+    <p>Paste link & customize</p>
+
+    <input type="text" id="link" placeholder="Paste LinkedIn / Website URL">
+
+    <select id="mode">
+      <option value="solid">Solid Color</option>
+      <option value="gradient">Gradient</option>
+    </select>
+
+   <div class="color-box">
+  <input type="color" id="bgColor" value="#ffffff" title="QR Line Color">
+  <input type="color" id="qrColor" value="#000000" title="QR Background Color">
+</div>
+
+
+    <button onclick="generateQR()">Generate QR</button>
+
+    <div id="genQR"></div>
+
+    <div class="download" onclick="downloadQR()">⬇ Download QR</div>
+  </div>
+</section>
+
+<script>
+/* ===== MY LINKEDIN QR ===== */
+new QRCode(document.getElementById("myQR"), {
+  text: "https://www.linkedin.com/in/hetvi-root/",
+  width: 180,
+  height: 180,
+  correctLevel: QRCode.CorrectLevel.H
+});
+
+let qr;
+
+/* ===== GENERATOR ===== */
+function generateQR() {
+  const link = document.getElementById("link").value;
+  if (!link) return alert("Enter a link");
+
+  document.getElementById("genQR").innerHTML = "";
+  document.querySelector(".download").style.display = "none";
+
+  new QRCode(document.getElementById("genQR"), {
+    text: link,
+    width: 180,
+    height: 180,
+    colorDark: document.getElementById("qrColor").value,   // QR lines
+    colorLight: document.getElementById("bgColor").value, // Background
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  document.querySelector(".download").style.display = "block";
+}
+
+
+function applyGradient() {
+  if (document.getElementById("mode").value !== "gradient") {
+    document.querySelector(".download").style.display = "block";
+    return;
+  }
+
+  const canvas = document.querySelector("#genQR canvas");
+  const ctx = canvas.getContext("2d");
+  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  const g = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  g.addColorStop(0, color1.value);
+  g.addColorStop(1, color2.value);
+
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalCompositeOperation = "destination-in";
+  ctx.putImageData(img, 0, 0);
+  ctx.globalCompositeOperation = "source-over";
+
+  document.querySelector(".download").style.display = "block";
+}
+
+function downloadQR() {
+  const canvas = document.querySelector("#genQR canvas");
+  const a = document.createElement("a");
+  a.download = "qr-code.png";
+  a.href = canvas.toDataURL();
+  a.click();
+}
+</script>
+
+</body>
+</html>
